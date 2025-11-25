@@ -1,0 +1,215 @@
+/* WP Product AI Summaries - Metabox Styles */
+
+#wpai_meta {
+    border: 1px solid #e2e8f0 !important;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+#wpai_meta .hndle {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+    color: white !important;
+    padding: 12px 15px !important;
+    font-weight: 600;
+    border-bottom: none !important;
+}
+
+#wpai_meta .hndle::before {
+    content: '⚡ ';
+}
+
+#wpai_meta .inside {
+    padding: 20px !important;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+
+.wpai-metabox-section {
+    margin-bottom: 18px;
+}
+
+.wpai-metabox-section:last-child {
+    margin-bottom: 0;
+}
+
+.wpai-metabox-label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: #2d3748;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.wpai-metabox-subtitle {
+    display: block;
+    margin-bottom: 10px;
+    font-size: 12px;
+    color: #718096;
+    font-weight: normal;
+    text-transform: none;
+    letter-spacing: 0;
+}
+
+.wpai-button-group {
+    display: flex;
+    gap: 8px;
+    margin-top: 12px;
+}
+
+.wpai-button-group button {
+    flex: 1;
+    padding: 12px 16px;
+    border: none;
+    border-radius: 5px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+}
+
+.wpai-button-group button::before {
+    display: inline-block;
+    font-size: 16px;
+}
+
+#wpai-generate {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+}
+
+#wpai-generate:hover:not(:disabled) {
+    box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+    transform: translateY(-2px);
+}
+
+#wpai-generate:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+}
+
+#wpai-generate::before {
+    content: '✨';
+}
+
+#wpai-result {
+    display: block;
+    width: 100% !important;
+    padding: 12px;
+    border: 1px solid #cbd5e0;
+    border-radius: 5px;
+    font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+    font-size: 12px;
+    line-height: 1.5;
+    resize: vertical;
+    transition: all 0.2s ease;
+    box-sizing: border-box;
+}
+
+#wpai-result:focus {
+    outline: none;
+    border-color: #667eea;
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+.wpai-result-info {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+    color: #718096;
+    margin-top: 8px;
+}
+
+.wpai-result-info::before {
+    content: 'ℹ️';
+}
+
+#wpai-insert {
+    background: linear-gradient(135deg, #48bb78 0%, #38a169 100%);
+    color: white;
+    box-shadow: 0 4px 12px rgba(72, 187, 120, 0.3);
+}
+
+#wpai-insert:hover:not(:disabled) {
+    box-shadow: 0 6px 20px rgba(72, 187, 120, 0.4);
+    transform: translateY(-2px);
+}
+
+#wpai-insert::before {
+    content: '✓';
+}
+
+.wpai-status-message {
+    display: none;
+    padding: 12px;
+    border-radius: 5px;
+    font-size: 13px;
+    margin-top: 12px;
+    animation: slideDown 0.3s ease;
+}
+
+.wpai-status-message.show {
+    display: block;
+}
+
+.wpai-status-message.success {
+    background: #ecfdf5;
+    border-left: 4px solid #48bb78;
+    color: #22543d;
+}
+
+.wpai-status-message.error {
+    background: #fef2f2;
+    border-left: 4px solid #f56565;
+    color: #742a2a;
+}
+
+.wpai-status-message.loading {
+    background: #f0f4ff;
+    border-left: 4px solid #667eea;
+    color: #2d3748;
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.wpai-spinner {
+    display: inline-block;
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: #667eea;
+    animation: blink 1.4s infinite;
+    margin-right: 4px;
+}
+
+.wpai-spinner:nth-child(2) {
+    animation-delay: 0.2s;
+}
+
+.wpai-spinner:nth-child(3) {
+    animation-delay: 0.4s;
+}
+
+@keyframes blink {
+    0%, 60%, 100% {
+        opacity: 0.3;
+    }
+    30% {
+        opacity: 1;
+    }
+}

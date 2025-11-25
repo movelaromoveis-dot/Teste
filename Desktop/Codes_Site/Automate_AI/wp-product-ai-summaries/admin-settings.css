@@ -1,0 +1,161 @@
+/* WP Product AI Summaries - Settings Page Styles */
+
+.wpai-settings-container {
+    max-width: 900px;
+    margin: 30px auto;
+    padding: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+
+.wpai-header {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 40px 30px;
+    border-radius: 8px 8px 0 0;
+    text-align: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.wpai-header h1 {
+    margin: 0 0 10px 0;
+    font-size: 28px;
+    font-weight: 600;
+}
+
+.wpai-header p {
+    margin: 0;
+    opacity: 0.95;
+    font-size: 14px;
+}
+
+.wpai-card {
+    background: white;
+    border: 1px solid #e2e8f0;
+    border-radius: 0 0 8px 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    overflow: hidden;
+}
+
+.wpai-card-body {
+    padding: 30px;
+}
+
+.wpai-form-group {
+    margin-bottom: 25px;
+}
+
+.wpai-form-group:last-child {
+    margin-bottom: 0;
+}
+
+.wpai-form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: #2d3748;
+    font-size: 14px;
+}
+
+.wpai-form-group .description {
+    display: block;
+    margin-top: 6px;
+    font-size: 13px;
+    color: #718096;
+}
+
+.wpai-form-group input[type="password"],
+.wpai-form-group input[type="text"] {
+    width: 100%;
+    max-width: 500px;
+    padding: 10px 12px;
+    border: 1px solid #cbd5e0;
+    border-radius: 5px;
+    font-size: 14px;
+    transition: all 0.2s ease;
+    box-sizing: border-box;
+}
+
+.wpai-form-group input[type="password"]:focus,
+.wpai-form-group input[type="text"]:focus {
+    border-color: #667eea;
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+.wpai-form-group input::placeholder {
+    color: #a0aec0;
+}
+
+.wpai-section-title {
+    font-size: 18px;
+    font-weight: 600;
+    color: #2d3748;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.wpai-section-title::before {
+    content: '';
+    display: inline-block;
+    width: 4px;
+    height: 20px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-radius: 2px;
+}
+
+.wpai-submit-wrapper {
+    display: flex;
+    gap: 12px;
+    margin-top: 30px;
+    padding-top: 20px;
+    border-top: 1px solid #e2e8f0;
+}
+
+.wpai-submit-wrapper .button {
+    padding: 10px 24px;
+    font-size: 14px;
+    font-weight: 600;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.wpai-submit-wrapper .button-primary {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+}
+
+.wpai-submit-wrapper .button-primary:hover {
+    box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+    transform: translateY(-2px);
+}
+
+.wpai-info-box {
+    background: #f0f4ff;
+    border-left: 4px solid #667eea;
+    padding: 16px;
+    border-radius: 5px;
+    margin-top: 20px;
+    font-size: 13px;
+    color: #2d3748;
+    line-height: 1.6;
+}
+
+.wpai-info-box strong {
+    color: #667eea;
+    display: block;
+    margin-bottom: 8px;
+}
+
+.wpai-info-box code {
+    background: white;
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+    font-size: 12px;
+    color: #764ba2;
+}
