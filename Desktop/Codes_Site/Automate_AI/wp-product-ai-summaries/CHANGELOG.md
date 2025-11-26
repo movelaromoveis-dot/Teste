@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## v0.3 (25/11/2025) - Richard Edition
+## v0.3 (25/11/2025)
 
 ### ✨ Novas Funcionalidades
 - **HUB Page**: Dashboard no menu principal do WordPress para gerenciamento centralizado

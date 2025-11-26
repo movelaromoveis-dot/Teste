@@ -1,0 +1,229 @@
+/* Modal Overlay */
+.wpai-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 9998;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Modal Container */
+.wpai-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Modal Content Box */
+.wpai-modal-content {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+    max-width: 90%;
+    max-height: 85vh;
+    overflow-y: auto;
+    position: relative;
+    padding: 30px;
+    animation: slideIn 0.3s ease-out;
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Close Button */
+.wpai-modal-close {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: none;
+    border: none;
+    font-size: 28px;
+    cursor: pointer;
+    color: #999;
+    padding: 0;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: color 0.2s;
+}
+
+.wpai-modal-close:hover {
+    color: #333;
+}
+
+/* Preview Frame */
+.wpai-preview-frame {
+    background: #fafafa;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 20px;
+    margin-top: 20px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Guide Container */
+.wpai-guide-container {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    line-height: 1.8;
+}
+
+.wpai-guide-container h3 {
+    color: #667eea;
+    font-size: 24px;
+    margin-bottom: 20px;
+    border-bottom: 3px solid #667eea;
+    padding-bottom: 10px;
+}
+
+.wpai-guide-container h4 {
+    color: #333;
+    font-size: 16px;
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+
+.wpai-guide-section {
+    margin-bottom: 25px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #eee;
+}
+
+.wpai-guide-section:last-child {
+    border-bottom: none;
+}
+
+.wpai-guide-section ul {
+    margin: 10px 0;
+    padding-left: 25px;
+}
+
+.wpai-guide-section li {
+    margin-bottom: 8px;
+    color: #555;
+}
+
+.wpai-guide-section code {
+    background: #f4f4f4;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 2px 6px;
+    font-family: 'Courier New', monospace;
+    color: #d63384;
+    font-size: 13px;
+}
+
+.wpai-guide-section pre {
+    background: #2d2d2d;
+    color: #f8f8f2;
+    padding: 15px;
+    border-radius: 6px;
+    overflow-x: auto;
+    font-family: 'Courier New', monospace;
+    font-size: 12px;
+    line-height: 1.5;
+    margin: 10px 0;
+}
+
+.wpai-guide-section pre code {
+    background: none;
+    border: none;
+    padding: 0;
+    color: #f8f8f2;
+}
+
+.wpai-guide-scrollable {
+    max-height: 70vh;
+    overflow-y: auto;
+    padding-right: 10px;
+}
+
+/* Scrollbar styling */
+.wpai-guide-scrollable::-webkit-scrollbar {
+    width: 8px;
+}
+
+.wpai-guide-scrollable::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 4px;
+}
+
+.wpai-guide-scrollable::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 4px;
+}
+
+.wpai-guide-scrollable::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+
+/* Preview/Help Buttons */
+.wpai-preview-btn,
+.wpai-help-btn {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.3s;
+    box-shadow: 0 2px 8px rgba(102, 126, 234, 0.3);
+}
+
+.wpai-preview-btn:hover,
+.wpai-help-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+}
+
+.wpai-preview-btn:active,
+.wpai-help-btn:active {
+    transform: translateY(0);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .wpai-modal-content {
+        max-width: 95%;
+        max-height: 90vh;
+        padding: 20px;
+    }
+
+    .wpai-guide-container h3 {
+        font-size: 20px;
+    }
+
+    .wpai-guide-container h4 {
+        font-size: 14px;
+    }
+
+    .wpai-guide-section code {
+        font-size: 12px;
+    }
+
+    .wpai-guide-section pre {
+        font-size: 11px;
+        padding: 12px;
+    }
+}

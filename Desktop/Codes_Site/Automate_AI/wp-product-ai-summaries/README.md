@@ -2,7 +2,7 @@
 
 Plugin intuitivo para gerar resumos HTML de produtos WooCommerce usando uma API de IA (ex: OpenAI).
 
-**Versão:** 0.3 | **Criador:** Richard | **Desenvolvido por:** Automate AI
+**Versão:** 0.3 | **Criador:** Richard 
 
 ## Novidades v0.3
 

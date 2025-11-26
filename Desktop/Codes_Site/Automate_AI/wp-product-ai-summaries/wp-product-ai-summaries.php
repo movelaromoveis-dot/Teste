@@ -3,7 +3,7 @@
 Plugin Name: WP Product AI Summaries
 Plugin URI:  
 Description: Gera resumos HTML para produtos WooCommerce usando uma API de IA.
-Version: 0.3
+Version: 0.4
 Author: Richard & Automate AI
 Author URI: 
 Text Domain: wp-product-ai-summaries
@@ -204,6 +204,7 @@ function wpai_meta_box_cb($post) {
         <label class="wpai-metabox-label">Resultado HTML</label>
         <span class="wpai-metabox-subtitle">Copie, edite ou clique em "Inserir" para usar</span>
         <textarea id="wpai-result" style="min-height: 160px;"><?php echo esc_textarea($generated); ?></textarea>
+        <button type="button" class="button" id="wpai-preview-result" style="margin-top: 10px;">👁 Preview Resultado</button>
     </div>
 
     <div class="wpai-metabox-section">
@@ -220,14 +221,16 @@ function wpai_admin_scripts($hook) {
     
     // Settings page styles
     if ($hook === 'settings_page_wp-ai-summaries') {
-        wp_enqueue_style('wpai-settings-css', plugins_url('admin-settings.css', __FILE__), array(), '0.1');
+        wp_enqueue_style('wpai-settings-css', plugins_url('admin-settings.css', __FILE__), array(), '0.3');
+        wp_enqueue_style('wpai-preview-css', plugins_url('admin-preview.css', __FILE__), array(), '0.3');
     }
     
     // Product edit page
     if ($hook === 'post.php' || $hook === 'post-new.php') {
         if (isset($post) && $post->post_type === 'product') {
-            wp_enqueue_style('wpai-metabox-css', plugins_url('admin-metabox.css', __FILE__), array(), '0.1');
-            wp_enqueue_script('wpai-admin-js', plugins_url('admin.js', __FILE__), array('jquery'), '0.1', true);
+            wp_enqueue_style('wpai-metabox-css', plugins_url('admin-metabox.css', __FILE__), array(), '0.3');
+            wp_enqueue_style('wpai-preview-css', plugins_url('admin-preview.css', __FILE__), array(), '0.3');
+            wp_enqueue_script('wpai-admin-js', plugins_url('admin.js', __FILE__), array('jquery'), '0.3', true);
             $opts = get_option('wpai_options', array());
             $nonce = wp_create_nonce('wpai_nonce');
             wp_localize_script('wpai-admin-js', 'wpaiData', array(
