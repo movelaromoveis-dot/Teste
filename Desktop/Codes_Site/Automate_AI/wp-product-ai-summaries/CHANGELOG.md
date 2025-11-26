@@ -1,5 +1,35 @@
 # CHANGELOG
 
+## v0.4 (26/11/2025) - Preview & Guide
+
+### ✨ Novas Funcionalidades
+- **Template Preview Modal**: Visualizar template antes de gerar resumo com dados de exemplo
+- **Interactive HTML/CSS Guide**: Modal com guia prático explicando:
+  - Cada tag HTML suportada e sua função
+  - Propriedades CSS mais úteis com exemplos
+  - Template de exemplo pronto para copiar/colar
+  - Tags proibidas (segurança)
+- **Live Preview Buttons**: Botões "👁 Preview" e "❓ Ajuda HTML/CSS" nas configurações
+- **Result Preview**: Botão "Preview Resultado" no metabox para visualizar HTML gerado
+
+### 🎨 UI/UX
+- Modal overlay com animações suaves (slideIn)
+- Scrollbar customizado nas modals
+- Preview frame com background destacado
+- Guia com código-exemplo formatado
+- Botões com gradiente (667eea → 764ba2)
+
+### 📁 Novos Arquivos
+- `admin-preview.css` (2.8 KB) - Estilos das modals e guia interativo
+
+### 🔧 Mudanças Técnicas
+- Novo arquivo CSS enfileirado em settings page e product edit page
+- Versão do plugin: 0.3 → 0.4
+- JavaScript modularizado com funções separadas para preview/guide
+- Suporte a {CONTEUDO} placeholder em template preview
+
+---
+
 ## v0.3 (25/11/2025)
 
 ### ✨ Novas Funcionalidades
