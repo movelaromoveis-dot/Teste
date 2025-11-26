@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## v0.6.3-beta (27/11/2025) - Dynamic Tabs Navigation
+
+### ✨ Melhorias na Interface
+- **Navegação de Abas Dinâmica**: Substituição de links hardcoded por loop dinâmico usando `apply_filters('wpai_hub_tabs', array(...))`, melhorando a extensibilidade e manutenção da HUB page.
+
+---
+
 ## v0.6.1-beta (26/11/2025) - Security Audit & Code Cleanup
 
 ### 🔒 Segurança Aprimorada

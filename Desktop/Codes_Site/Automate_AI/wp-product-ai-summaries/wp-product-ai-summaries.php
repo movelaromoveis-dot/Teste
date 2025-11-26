@@ -14,7 +14,7 @@ defined('ABSPATH') or die();
 
 define('WPAI_PLUGIN_DIR', plugin_dir_path(__FILE__));
 define('WPAI_PLUGIN_FILE', __FILE__);
-define('WPAI_PLUGIN_VERSION', '0.6.1-beta');
+define('WPAI_PLUGIN_VERSION', '0.6.3-beta');
 define('WPAI_PLUGIN_SLUG', 'wp-product-ai-summaries');
 define('WPAI_GITHUB_REPO', 'movelaromoveis-dot/Teste');
 define('WPAI_GITHUB_API', 'https://api.github.com/repos/' . WPAI_GITHUB_REPO . '/releases/latest');
@@ -127,7 +127,12 @@ function wpai_hub_page() {
     }
     
     $current_tab = isset($_GET['tab']) ? sanitize_text_field(wp_unslash($_GET['tab'])) : 'dashboard';
-    $allowed_tabs = array('dashboard', 'templates', 'tutorial');
+    $tabs = apply_filters('wpai_hub_tabs', array(
+        'dashboard' => '📊 Dashboard',
+        'templates' => '🎨 Visualizar Templates',
+        'tutorial' => '📖 Tutorial'
+    ));
+    $allowed_tabs = array_keys($tabs);
     if (!in_array($current_tab, $allowed_tabs, true)) {
         $current_tab = 'dashboard';
     }
@@ -141,9 +146,9 @@ function wpai_hub_page() {
 
         <!-- Tabs Navigation -->
         <nav class="wpai-tabs">
-            <a href="?page=wp-product-ai-hub&tab=dashboard" class="tab-link <?php echo $current_tab === 'dashboard' ? 'active' : ''; ?>">📊 Dashboard</a>
-            <a href="?page=wp-product-ai-hub&tab=templates" class="tab-link <?php echo $current_tab === 'templates' ? 'active' : ''; ?>">🎨 Visualizar Templates</a>
-            <a href="?page=wp-product-ai-hub&tab=tutorial" class="tab-link <?php echo $current_tab === 'tutorial' ? 'active' : ''; ?>">📖 Tutorial</a>
+            <?php foreach ($tabs as $tab_key => $tab_label) : ?>
+                <a href="?page=wp-product-ai-hub&tab=<?php echo esc_attr($tab_key); ?>" class="tab-link <?php echo $current_tab === $tab_key ? 'active' : ''; ?>"><?php echo esc_html($tab_label); ?></a>
+            <?php endforeach; ?>
         </nav>
 
         <!-- Tab Content -->

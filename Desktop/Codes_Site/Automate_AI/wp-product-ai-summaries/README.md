@@ -2,14 +2,54 @@
 
 Plugin intuitivo para gerar resumos HTML de produtos WooCommerce usando uma API de IA (ex: OpenAI).
 
-**Versão:** 0.3 | **Criador:** Richard 
+**Versão:** 0.6.1-beta | **Criador:** Richard & Automate AI
 
-## Novidades v0.3
+## Novidades v0.6.1-beta (26/11/2025) - Security Audit & Code Cleanup
 
-- ✨ **HUB Page**: Dashboard visual para gerenciar o plugin a partir do menu principal
-- 🎨 **Template Editor**: Customize o formato HTML dos resumos diretamente no painel de configurações
-- 🔗 **Action Links**: Acesso rápido às configurações ("Configurações") na página de plugins
-- 📝 **Templates Predefinidos**: Seleção entre templates padrão, profissional e minimalista
+### 🔒 Segurança Aprimorada
+- **Sanitização de Input**: `wp_unslash()` adicionado ao acesso de `$_GET['tab']`
+- **Validação de Abas**: Whitelist de abas permitidas na HUB page
+- **Sanitização de Settings**: Callback customizado para sanitizar todas as opções
+- **Verificação de Permissões**: `current_user_can('manage_options')` na HUB page
+- **Constantes Centralizadas**: Nonces e slugs centralizados para melhor manutenção
+
+### 🧹 Limpeza de Código
+- **Constantes Adicionadas**: `WPAI_PLUGIN_SLUG`, `WPAI_NONCE_ACTION`, `WPAI_NONCE_NAME`
+- **Documentação**: URL do plugin adicionada ao header
+- **License**: Tag GPL v2 or later adicionada
+
+## Novidades v0.6 (26/11/2025) - Enhanced HUB with Tutorial & Template Preview
+
+### ✨ Principais Melhorias
+- **HUB Redesenhado com Sistema de Abas**
+  - Dashboard: Visão geral com cards de acesso rápido
+  - Templates: Painel de visualização com preview em tempo real
+  - Tutorial: Guia intuitivo integrado com 4 seções
+- **Painel de Visualização de Templates**
+  - Preview ao vivo com conteúdo de exemplo
+  - Atualização em tempo real ao customizar
+- **Tutorial Integrado**
+  - Setup: Instruções passo-a-passo
+  - Configuração Recomendada: Melhor setup OpenAI
+  - Editando Produtos: Como usar metabox
+  - Customização de Templates: Guia HTML/CSS
+  - FAQ: Respostas comuns
+
+## Novidades v0.4 (26/11/2025) - Preview & Guide
+
+### ✨ Novas Funcionalidades
+- **Template Preview Modal**: Visualizar template antes de gerar resumo com dados de exemplo
+- **Interactive HTML/CSS Guide**: Modal com guia prático explicando tags HTML suportadas
+- **Live Preview Buttons**: Botões "👁 Preview" e "❓ Ajuda HTML/CSS" nas configurações
+- **Result Preview**: Botão "Preview Resultado" no metabox para visualizar HTML gerado
+
+## Novidades v0.3 (25/11/2025) - Hub & Template
+
+### ✨ Novas Funcionalidades
+- **HUB Page**: Dashboard no menu principal do WordPress para gerenciamento centralizado
+- **Plugin Action Links**: Link "Configurações" direto na página de plugins
+- **Template Editor**: Aba de templates no painel de configurações para customização HTML
+- **Templates Predefinidos**: Seleção entre templates (Padrão, Profissional, Minimalista, Personalizado)
 
 ## Instalação
 
