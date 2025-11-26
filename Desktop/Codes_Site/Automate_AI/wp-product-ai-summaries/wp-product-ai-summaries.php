@@ -3,8 +3,8 @@
 Plugin Name: WP Product AI Summaries
 Plugin URI:  
 Description: Gera resumos HTML para produtos WooCommerce usando uma API de IA.
-Version: 0.5
-Author: Richard & Automate AI
+Version: 0.6
+Author: Richard
 Author URI: 
 Text Domain: wp-product-ai-summaries
 */
@@ -13,7 +13,7 @@ defined('ABSPATH') or die();
 
 define('WPAI_PLUGIN_DIR', plugin_dir_path(__FILE__));
 define('WPAI_PLUGIN_FILE', __FILE__);
-define('WPAI_PLUGIN_VERSION', '0.5');
+define('WPAI_PLUGIN_VERSION', '0.6');
 define('WPAI_GITHUB_REPO', 'movelaromoveis-dot/Teste');
 define('WPAI_GITHUB_API', 'https://api.github.com/repos/' . WPAI_GITHUB_REPO . '/releases/latest');
 
@@ -118,46 +118,195 @@ function wpai_add_hub_menu() {
 }
 
 function wpai_hub_page() {
+    $current_tab = isset($_GET['tab']) ? sanitize_text_field($_GET['tab']) : 'dashboard';
     ?>
     <div class="wrap wpai-hub">
         <div class="wpai-hub-header">
             <h1>WP Product AI Summaries</h1>
             <p class="subtitle">Gere resumos HTML para produtos WooCommerce com IA</p>
+            <p class="wpai-version">Versão <?php echo esc_html(WPAI_PLUGIN_VERSION); ?> | Criador: <strong>Richard</strong></p>
         </div>
 
-        <div class="wpai-hub-content">
-            <div class="wpai-hub-card">
-                <h3>⚙️ Configurações</h3>
-                <p>Configure sua chave de API, escolha onde inserir resumos e customize o template HTML.</p>
-                <a href="<?php echo admin_url('admin.php?page=wp-ai-summaries'); ?>" class="button button-primary">Abrir Configurações</a>
-            </div>
+        <!-- Tabs Navigation -->
+        <nav class="wpai-tabs">
+            <a href="?page=wp-product-ai-hub&tab=dashboard" class="tab-link <?php echo $current_tab === 'dashboard' ? 'active' : ''; ?>">📊 Dashboard</a>
+            <a href="?page=wp-product-ai-hub&tab=templates" class="tab-link <?php echo $current_tab === 'templates' ? 'active' : ''; ?>">🎨 Visualizar Templates</a>
+            <a href="?page=wp-product-ai-hub&tab=tutorial" class="tab-link <?php echo $current_tab === 'tutorial' ? 'active' : ''; ?>">📖 Tutorial</a>
+        </nav>
 
-            <div class="wpai-hub-card">
-                <h3>📚 Documentação</h3>
-                <p>Saiba como usar o plugin, configurar templates e otimizar seus resumos.</p>
-                <a href="https://github.com/automate-ai" target="_blank" class="button">Ver GitHub</a>
-            </div>
-
-            <div class="wpai-hub-card">
-                <h3>ℹ️ Sobre</h3>
-                <p>Versão: 0.3 | Criador: Richard | Desenvolvido por: Automate AI</p>
-            </div>
+        <!-- Tab Content -->
+        <div class="wpai-tab-content">
+            <?php
+            if ($current_tab === 'dashboard') {
+                wpai_hub_dashboard();
+            } elseif ($current_tab === 'templates') {
+                wpai_hub_templates();
+            } elseif ($current_tab === 'tutorial') {
+                wpai_hub_tutorial();
+            }
+            ?>
         </div>
     </div>
     <style>
-        .wpai-hub { max-width: 1000px; margin: 0 auto; }
+        .wpai-hub { max-width: 1200px; margin: 0 auto; }
         .wpai-hub-header { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 30px; border-radius: 8px; margin-bottom: 30px; text-align: center; }
         .wpai-hub-header h1 { margin: 0; font-size: 32px; }
         .wpai-hub-header .subtitle { margin: 10px 0 0 0; opacity: 0.9; }
+        .wpai-version { margin: 15px 0 0 0; font-size: 14px; opacity: 0.95; }
+        
+        .wpai-tabs { display: flex; gap: 10px; margin-bottom: 30px; border-bottom: 2px solid #e2e8f0; }
+        .tab-link { padding: 12px 24px; color: #667eea; text-decoration: none; font-weight: 600; transition: all 0.3s; cursor: pointer; border-bottom: 3px solid transparent; }
+        .tab-link:hover { color: #764ba2; }
+        .tab-link.active { color: #764ba2; border-bottom-color: #764ba2; }
+        
+        .wpai-tab-content { animation: fadeIn 0.3s ease-out; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        
         .wpai-hub-content { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
         .wpai-hub-card { background: white; border: 1px solid #e2e8f0; border-radius: 8px; padding: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); transition: all 0.3s; }
         .wpai-hub-card:hover { box-shadow: 0 8px 16px rgba(0,0,0,0.12); transform: translateY(-2px); }
         .wpai-hub-card h3 { margin-top: 0; color: #2d3748; }
         .wpai-hub-card p { color: #666; line-height: 1.6; }
         .wpai-hub-card .button { margin-top: 15px; }
+        
+        .wpai-template-preview { background: #f9f9f9; border: 1px solid #ddd; border-radius: 6px; padding: 20px; margin-bottom: 20px; }
+        .wpai-template-preview h4 { margin-top: 0; color: #333; }
+        .wpai-template-preview iframe { width: 100%; height: 300px; border: 1px solid #ddd; border-radius: 4px; }
+        
+        .wpai-tutorial-section { background: white; border: 1px solid #e2e8f0; border-radius: 8px; padding: 25px; margin-bottom: 20px; }
+        .wpai-tutorial-section h3 { color: #667eea; margin-top: 0; border-bottom: 2px solid #667eea; padding-bottom: 10px; }
+        .wpai-tutorial-section h4 { color: #333; margin-top: 20px; }
+        .wpai-tutorial-section ul { line-height: 1.8; color: #555; }
+        .wpai-tutorial-section li { margin-bottom: 10px; }
+        .wpai-tutorial-section code { background: #f4f4f4; padding: 2px 6px; border-radius: 3px; font-family: monospace; }
+        .wpai-step-box { background: #f0f4ff; border-left: 4px solid #667eea; padding: 15px; margin-bottom: 15px; border-radius: 4px; }
+        .wpai-step-box strong { color: #667eea; }
+        .wpai-tip-box { background: #fffbf0; border-left: 4px solid #ffc107; padding: 15px; margin-bottom: 15px; border-radius: 4px; }
+        .wpai-tip-box strong { color: #ff9800; }
     </style>
     <?php
 }
+
+function wpai_hub_dashboard() {
+    ?>
+    <div class="wpai-hub-content">
+        <div class="wpai-hub-card">
+            <h3>⚙️ Configurações</h3>
+            <p>Configure sua chave de API, escolha onde inserir resumos e customize o template HTML.</p>
+            <a href="<?php echo admin_url('admin.php?page=wp-ai-summaries'); ?>" class="button button-primary">Abrir Configurações</a>
+        </div>
+
+        <div class="wpai-hub-card">
+            <h3>🎨 Templates</h3>
+            <p>Visualize e customize o formato HTML dos seus resumos de forma prática.</p>
+            <a href="?page=wp-product-ai-hub&tab=templates" class="button">Ver Templates</a>
+        </div>
+
+        <div class="wpai-hub-card">
+            <h3>📖 Aprenda a Usar</h3>
+            <p>Tutorial passo-a-passo para começar a gerar resumos com a IA.</p>
+            <a href="?page=wp-product-ai-hub&tab=tutorial" class="button">Acessar Tutorial</a>
+        </div>
+
+        <div class="wpai-hub-card">
+            <h3>ℹ️ Sobre</h3>
+            <p><strong>Versão:</strong> <?php echo esc_html(WPAI_PLUGIN_VERSION); ?><br/><strong>Criador:</strong> Richard<br/><strong>Tecnologia:</strong> OpenAI API</p>
+        </div>
+    </div>
+    <?php
+}
+
+function wpai_hub_templates() {
+    $opts = get_option('wpai_options', array());
+    $current_template = isset($opts['template_custom']) ? $opts['template_custom'] : wpai_get_default_template();
+    ?>
+    <div class="wpai-tutorial-section">
+        <h3>🎨 Visualizador de Templates</h3>
+        <p>Veja como seu template ficará com conteúdo real:</p>
+        
+        <div class="wpai-template-preview">
+            <h4>Preview Atual:</h4>
+            <?php
+            $sample_content = '<strong>Produto Exemplo:</strong> Mesa elegante de jantar com design moderno, estrutura robusta em MDF. Perfeita para ambientes sofisticados.';
+            $preview_html = str_replace('{CONTEUDO}', $sample_content, $current_template);
+            echo wp_kses_post($preview_html);
+            ?>
+        </div>
+
+        <p><strong>Dica:</strong> Para alterar este template, vá em <a href="<?php echo admin_url('admin.php?page=wp-ai-summaries'); ?>">Configurações → Templates HTML</a> e edite o campo "Editor de Template".</p>
+    </div>
+    <?php
+}
+
+function wpai_hub_tutorial() {
+    ?>
+    <div class="wpai-tutorial-section">
+        <h3>📖 Tutorial: Como Usar o Plugin</h3>
+        
+        <div class="wpai-step-box">
+            <strong>Passo 1: Configurar a Chave de API</strong>
+            <ol style="margin: 10px 0 0 0;">
+                <li>Vá em <a href="<?php echo admin_url('admin.php?page=wp-ai-summaries'); ?>">WP Product AI → Configurações</a></li>
+                <li>Abra a aba <strong>"Configurações da IA"</strong></li>
+                <li>Copie sua chave de API do OpenAI em <code>https://platform.openai.com/api-keys</code></li>
+                <li>Cole a chave no campo <strong>"API Key"</strong> e clique <strong>"Salvar Alterações"</strong></li>
+            </ol>
+        </div>
+
+        <h4>✨ Configurações Recomendadas</h4>
+        <ul>
+            <li><strong>Modelo:</strong> Deixe em branco para usar <code>gpt-4o-mini</code> (mais rápido e barato)</li>
+            <li><strong>Inserir em:</strong> Escolha <strong>"Ambos (both)"</strong> para preencher tanto descrição quanto resumo</li>
+            <li><strong>Gerar resumo breve:</strong> Marque para gerar texto simples + HTML</li>
+        </ul>
+
+        <div class="wpai-step-box" style="margin-top: 20px;">
+            <strong>Passo 2: Editar um Produto e Gerar Resumo</strong>
+            <ol style="margin: 10px 0 0 0;">
+                <li>Vá em <strong>Produtos → Todos os Produtos</strong></li>
+                <li>Clique em um produto para editar (ou crie um novo)</li>
+                <li>Desça até encontrar o metabox <strong>"⚡ AI Summary"</strong></li>
+                <li>Clique no botão <strong>"✨ Gerar Resumo IA"</strong> e aguarde (alguns segundos)</li>
+                <li>O HTML será gerado e exibido. Revise e clique em <strong>"✓ Inserir no Resumo"</strong></li>
+                <li>O produto será salvo automaticamente</li>
+            </ol>
+        </div>
+
+        <div class="wpai-tip-box">
+            <strong>💡 Dica:</strong> Você pode editar o HTML gerado antes de inserir! Copie o texto do campo "Resultado HTML", modifique conforme quiser e clique "Inserir".
+        </div>
+
+        <h4>🎨 Customizando o Template</h4>
+        <div class="wpai-step-box">
+            <strong>Para mudar o formato dos resumos:</strong>
+            <ol style="margin: 10px 0 0 0;">
+                <li>Vá em <a href="<?php echo admin_url('admin.php?page=wp-ai-summaries'); ?>">Configurações → Templates HTML</a></li>
+                <li>Abra a aba <strong>"Templates HTML"</strong></li>
+                <li>No campo <strong>"Editor de Template"</strong>, customize o HTML</li>
+                <li>Use <code>{CONTEUDO}</code> como placeholder para onde o resumo será inserido</li>
+                <li>Clique <strong>"Salvar Alterações"</strong></li>
+                <li>Próximos resumos gerados usarão seu novo template!</li>
+            </ol>
+        </div>
+
+        <p>Precisa de ajuda com HTML/CSS? Clique no botão <strong>"❓ Ajuda HTML/CSS"</strong> no editor de templates para ver exemplos.</p>
+
+        <h4>❓ Perguntas Frequentes</h4>
+        <ul>
+            <li><strong>Posso voltar um resumo gerado?</strong> Sim! Clique em "Editar" no produto, copie a descrição anterior de um backup e clique "Atualizar".</li>
+            <li><strong>A IA precisa de internet?</strong> Sim, faz requisições para OpenAI. Você precisa de uma chave de API válida.</li>
+            <li><strong>O resumo é gerado em segundos?</strong> Normalmente sim. Se demorar muito, pode ser latência da rede ou limite da API.</li>
+            <li><strong>Consigo gerar para vários produtos de uma vez?</strong> Não nesta versão. Cada produto deve ser gerado individualmente.</li>
+        </ul>
+
+        <div class="wpai-tip-box">
+            <strong>⚠️ Importante:</strong> Este plugin <strong>requer WooCommerce</strong> instalado e ativado para funcionar. Sem WooCommerce, o plugin não funcionará.
+        </div>
+    </div>
+    <?php
+}
+
+
 
 /* --- Settings page (API key / model) --- */
 add_action('admin_menu', 'wpai_add_admin_menu');
