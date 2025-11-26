@@ -3,7 +3,7 @@
 Plugin Name: WP Product AI Summaries
 Plugin URI:  
 Description: Gera resumos HTML para produtos WooCommerce usando uma API de IA.
-Version: 0.4
+Version: 0.5
 Author: Richard & Automate AI
 Author URI: 
 Text Domain: wp-product-ai-summaries
@@ -13,6 +13,87 @@ defined('ABSPATH') or die();
 
 define('WPAI_PLUGIN_DIR', plugin_dir_path(__FILE__));
 define('WPAI_PLUGIN_FILE', __FILE__);
+define('WPAI_PLUGIN_VERSION', '0.5');
+define('WPAI_GITHUB_REPO', 'movelaromoveis-dot/Teste');
+define('WPAI_GITHUB_API', 'https://api.github.com/repos/' . WPAI_GITHUB_REPO . '/releases/latest');
+
+/* --- WooCommerce Dependency Check --- */
+add_action('admin_notices', 'wpai_check_woocommerce_dependency');
+function wpai_check_woocommerce_dependency() {
+    if (!is_plugin_active('woocommerce/woocommerce.php')) {
+        echo '<div class="notice notice-error is-dismissible"><p>';
+        echo '<strong>WP Product AI Summaries:</strong> Este plugin requer WooCommerce instalado e ativado. ';
+        echo '<a href="' . admin_url('plugin-install.php?tab=search&s=woocommerce') . '">Instalar WooCommerce</a>';
+        echo '</p></div>';
+    }
+}
+
+/* --- Version Update Checker & Notifier --- */
+add_action('admin_notices', 'wpai_check_for_updates');
+function wpai_check_for_updates() {
+    if (!current_user_can('manage_options')) return;
+    
+    // Check for updates once per day
+    $last_check = get_option('wpai_last_update_check', 0);
+    if (time() - $last_check < 86400) return;
+    
+    $latest = wpai_get_latest_version();
+    update_option('wpai_last_update_check', time());
+    
+    if ($latest && version_compare(WPAI_PLUGIN_VERSION, $latest, '<')) {
+        echo '<div class="notice notice-info is-dismissible"><p>';
+        echo '<strong>WP Product AI Summaries:</strong> ';
+        echo 'Nova versão disponível: <strong>' . esc_html($latest) . '</strong> ';
+        echo '(<a href="https://github.com/' . WPAI_GITHUB_REPO . '/releases/tag/v' . esc_attr($latest) . '" target="_blank">Ver detalhes</a>)';
+        echo '</p></div>';
+        update_option('wpai_latest_version', $latest);
+    }
+}
+
+function wpai_get_latest_version() {
+    $transient_key = 'wpai_latest_version_cache';
+    $cached = get_transient($transient_key);
+    
+    if ($cached !== false) {
+        return $cached;
+    }
+    
+    $response = wp_remote_get(WPAI_GITHUB_API, array(
+        'timeout' => 5,
+        'headers' => array('User-Agent' => 'wp-product-ai-summaries'),
+    ));
+    
+    if (is_wp_error($response)) {
+        return false;
+    }
+    
+    $body = wp_remote_retrieve_body($response);
+    $data = json_decode($body, true);
+    
+    if (!isset($data['tag_name'])) {
+        return false;
+    }
+    
+    // Extract version number (v0.4 -> 0.4)
+    $version = str_replace('v', '', $data['tag_name']);
+    
+    // Cache for 24 hours
+    set_transient($transient_key, $version, 86400);
+    
+    return $version;
+}
+
+/* --- Check WooCommerce on plugin activation --- */
+register_activation_hook(__FILE__, 'wpai_activation_check');
+function wpai_activation_check() {
+    if (!is_plugin_active('woocommerce/woocommerce.php')) {
+        wp_die(
+            'Este plugin requer WooCommerce. Por favor, instale e ative o WooCommerce primeiro.',
+            'Dependência não atendida',
+            array('back_link' => true)
+        );
+    }
+}
 
 /* --- Plugin action links (Configurações) --- */
 add_filter('plugin_action_links_' . plugin_basename(__FILE__), 'wpai_add_plugin_links');

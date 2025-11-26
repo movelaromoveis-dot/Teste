@@ -30,7 +30,7 @@
 
 ---
 
-## v0.3 (25/11/2025)
+## v0.3 (25/11/2025) Hub & Template
 
 ### ✨ Novas Funcionalidades
 - **HUB Page**: Dashboard no menu principal do WordPress para gerenciamento centralizado
