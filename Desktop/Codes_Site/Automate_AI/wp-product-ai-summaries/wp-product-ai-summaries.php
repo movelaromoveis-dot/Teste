@@ -1,21 +1,25 @@
 <?php
 /*
 Plugin Name: WP Product AI Summaries
-Plugin URI:  
+Plugin URI: https://github.com/movelaromoveis-dot/Teste
 Description: Gera resumos HTML para produtos WooCommerce usando uma API de IA.
-Version: 0.6
+Version: 0.6.1-beta
 Author: Richard
 Author URI: 
 Text Domain: wp-product-ai-summaries
+License: GPL v2 or later
 */
 
 defined('ABSPATH') or die();
 
 define('WPAI_PLUGIN_DIR', plugin_dir_path(__FILE__));
 define('WPAI_PLUGIN_FILE', __FILE__);
-define('WPAI_PLUGIN_VERSION', '0.6');
+define('WPAI_PLUGIN_VERSION', '0.6.1-beta');
+define('WPAI_PLUGIN_SLUG', 'wp-product-ai-summaries');
 define('WPAI_GITHUB_REPO', 'movelaromoveis-dot/Teste');
 define('WPAI_GITHUB_API', 'https://api.github.com/repos/' . WPAI_GITHUB_REPO . '/releases/latest');
+define('WPAI_NONCE_ACTION', 'wpai_nonce_action');
+define('WPAI_NONCE_NAME', 'wpai_nonce');
 
 /* --- WooCommerce Dependency Check --- */
 add_action('admin_notices', 'wpai_check_woocommerce_dependency');
@@ -118,7 +122,15 @@ function wpai_add_hub_menu() {
 }
 
 function wpai_hub_page() {
-    $current_tab = isset($_GET['tab']) ? sanitize_text_field($_GET['tab']) : 'dashboard';
+    if (!current_user_can('manage_options')) {
+        wp_die(__('Você não tem permissão para acessar esta página.', 'wp-product-ai-summaries'));
+    }
+    
+    $current_tab = isset($_GET['tab']) ? sanitize_text_field(wp_unslash($_GET['tab'])) : 'dashboard';
+    $allowed_tabs = array('dashboard', 'templates', 'tutorial');
+    if (!in_array($current_tab, $allowed_tabs, true)) {
+        $current_tab = 'dashboard';
+    }
     ?>
     <div class="wrap wpai-hub">
         <div class="wpai-hub-header">
@@ -316,7 +328,43 @@ function wpai_add_admin_menu() {
 
 add_action('admin_init','wpai_settings_init');
 function wpai_settings_init() {
-    register_setting('wpai_settings','wpai_options');
+    // Sanitize callback for options
+    $sanitize_cb = function($options) {
+        if (!is_array($options)) {
+            return array();
+        }
+        
+        $sanitized = array();
+        
+        if (isset($options['api_key'])) {
+            $sanitized['api_key'] = sanitize_text_field(wp_unslash($options['api_key']));
+        }
+        if (isset($options['model'])) {
+            $sanitized['model'] = sanitize_text_field(wp_unslash($options['model']));
+        }
+        if (isset($options['insert_target'])) {
+            $valid_targets = array('excerpt', 'content', 'both');
+            $sanitized['insert_target'] = in_array($options['insert_target'], $valid_targets, true) 
+                ? sanitize_text_field(wp_unslash($options['insert_target'])) 
+                : 'excerpt';
+        }
+        if (isset($options['generate_brief'])) {
+            $sanitized['generate_brief'] = (bool) $options['generate_brief'];
+        }
+        if (isset($options['template_selected'])) {
+            $sanitized['template_selected'] = sanitize_text_field(wp_unslash($options['template_selected']));
+        }
+        if (isset($options['template_custom'])) {
+            $sanitized['template_custom'] = wp_kses_post(wp_unslash($options['template_custom']));
+        }
+        
+        return $sanitized;
+    };
+    
+    register_setting('wpai_settings', 'wpai_options', array(
+        'sanitize_callback' => $sanitize_cb,
+        'type' => 'array'
+    ));
 
     add_settings_section('wpai_section','Configurações da IA','wpai_section_cb','wp-ai-summaries');
 

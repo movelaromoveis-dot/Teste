@@ -1,5 +1,54 @@
 # CHANGELOG
 
+## v0.6.1-beta (26/11/2025) - Security Audit & Code Cleanup
+
+### 🔒 Segurança Aprimorada
+- **Sanitização de Input**: `wp_unslash()` adicionado ao acesso de `$_GET['tab']`
+- **Validação de Abas**: Whitelist de abas permitidas na HUB page
+- **Sanitização de Settings**: Callback customizado para sanitizar todas as opções
+  - API Key: `sanitize_text_field()`
+  - Modelo: `sanitize_text_field()`
+  - Insert Target: validação de valores permitidos
+  - Template Custom: `wp_kses_post()`
+- **Verificação de Permissões**: `current_user_can('manage_options')` na HUB page com `wp_die()` fallback
+- **Nonce Constants**: Constantes centralizadas para `WPAI_NONCE_ACTION` e `WPAI_NONCE_NAME`
+
+### 🧹 Limpeza de Código
+- **Constantes Adicionadas**: `WPAI_PLUGIN_SLUG`, `WPAI_NONCE_ACTION`, `WPAI_NONCE_NAME` para melhor manutenção
+- **Documentação**: URL do plugin adicionada ao header
+- **License**: Tag GPL v2 or later adicionada ao header
+
+### 🐛 Correções
+- Erros de acesso a `$_GET` com `wp_unslash()` 
+- Erros de PowerShell relatados durante update checks
+- Melhor tratamento de erros em functions remotas
+
+### 📋 Notas Beta
+- Versão de teste para validar todas as melhorias de segurança
+- Feedback: Testar em ambiente local antes de produção
+- Relatório de bugs via GitHub Issues
+
+---
+
+## v0.6 (26/11/2025) - Enhanced HUB with Tutorial & Template Preview
+
+### ✨ Principais Melhorias
+- **HUB Redesenhado com Sistema de Abas**
+  - Dashboard: Visão geral com cards de acesso rápido
+  - Templates: Painel de visualização com preview em tempo real
+  - Tutorial: Guia intuitivo integrado com 4 seções
+- **Painel de Visualização de Templates**
+  - Preview ao vivo com conteúdo de exemplo
+  - Atualização em tempo real ao customizar
+- **Tutorial Integrado**
+  - Setup: Instruções passo-a-passo
+  - Configuração Recomendada: Melhor setup OpenAI
+  - Editando Produtos: Como usar metabox
+  - Customização de Templates: Guia HTML/CSS
+  - FAQ: Respostas comuns
+
+---
+
 ## v0.4 (26/11/2025) - Preview & Guide
 
 ### ✨ Novas Funcionalidades
