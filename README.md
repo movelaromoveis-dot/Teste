@@ -3,7 +3,9 @@
 <h2>🇧🇷 Português</h2>
 
 <h3>📌 Sobre o Projeto</h3>
-<p>Sou um Dev Junior tentando aprender PHP criando alguns plugins/addon que ajudem o dia a dia com tarefas repetivas em sites eCommerce</p>
+<p>
+  Sou um Dev Junior tentando aprender PHP criando alguns plugins/addon que ajudem o dia a dia com tarefas repetivas em sites eCommerce
+</p>
 <p>
 Este projeto é um plugin para <strong>WordPress + WooCommerce</strong> criado para facilitar tarefas repetitivas e melhorar o fluxo de trabalho de lojas virtuais. Ele inclui um conjunto de <strong>addons inteligentes</strong>, com foco no uso de <strong>Inteligência Artificial</strong> para gerar resumos automáticos de produtos, detectar itens duplicados e permitir personalização avançada.
 </p>
@@ -108,6 +110,9 @@ O plugin permite que você personalize totalmente o conteúdo gerado, usando tem
 <h2>🇺🇸 English</h2>
 
 <h3>📌 About the Project</h3>
+<p>
+  I'm a junior dev trying to learn PHP by creating plugins/addons to help with repetitive tasks on eCommerce websites.
+</p>
 <p>
 This project is a <strong>WordPress + WooCommerce</strong> plugin designed to simplify repetitive tasks and enhance online store productivity. It includes a set of <strong>smart addons</strong>, focusing on the use of <strong>Artificial Intelligence</strong> to generate product summaries, detect duplicates, and support advanced customization.
 </p>
